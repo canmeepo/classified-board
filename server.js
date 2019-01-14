@@ -23,6 +23,12 @@ ObjectId.prototype.valueOf = function () {
 };
 
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true
+}
+app.use(cors(corsOptions))
 const server = new ApolloServer({ 
     typeDefs, 
     resolvers, 
