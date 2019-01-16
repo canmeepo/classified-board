@@ -11,7 +11,7 @@ const { ApolloServer, gql } = require('apollo-server-express');
 const {typeDefs} = require('./schema');
 const {resolvers} = require('./resolvers')
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
     .then(() => console.log('db connected'))
     .catch(err => console.error(err))
 

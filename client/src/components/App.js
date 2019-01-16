@@ -5,6 +5,7 @@ import {GET_ALL_PETS} from '../quries'
 
 const App = () => (
   <div className="App">
+    <h2>pets</h2>
     <Query query={GET_ALL_PETS}>
       {({data, loading, error}) => {
         if (loading) return <div>loading...</div>
