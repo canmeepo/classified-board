@@ -12,6 +12,20 @@ exports.resolvers = {
         getAllPets: async (root, args, {Pet}) => {
             const allPets = await Pet.find();
             return allPets;
+        },
+
+        getCurrentUser: async (root, args, {currentUser, User}) => {
+            if (!currentUser) {
+                return null
+            }
+
+            const user = await User.findOne({email: currentUser.email})
+                .populate({
+                    path: 'favorites',
+                    model: "Pet"
+                })
+
+            return user;
         }
     },
 
@@ -24,8 +38,8 @@ exports.resolvers = {
             return newPet
         },
 
-        signinUser: async (root, {username, password}, {User}) => {
-            const user = await User.findOne({username});
+        signinUser: async (root, {email, password}, {User}) => {
+            const user = await User.findOne({email});
 
             if(!user) {
                 throw new Error('User not found')

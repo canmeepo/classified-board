@@ -22,6 +22,8 @@ type User {
 
 type Query {
     getAllPets: [Pet]
+
+    getCurrentUser: User
 }
 
 type Token {
@@ -38,6 +40,6 @@ type Mutation {
     ): Pet
 
     signupUser(username: String!, email: String!, password: String!): Token
-    signinUser(username: String!, password: String!): Token
+    signinUser(email: String!, password: String!): Token
 }
 `;

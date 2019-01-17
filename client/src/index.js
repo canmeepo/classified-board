@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import {ApolloProvider} from 'react-apollo';
@@ -7,24 +7,58 @@ import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-do
 import App from './components/App';
 import Signin from './components/auth/Signin';
 import Signup from './components/auth/Signup';
+import Session from './components/Session';
+import Header from './components/Header'
+import Search from './components/pets/Search'
+import AddPet from './components/pets/AddPet'
+import Profile from './components/profile/profile'
+
 
 
 const client = new ApolloClient({
-    uri: 'http://localhost:8000/graphql'
+    uri: 'http://localhost:8000/graphql',
+    fetchOptions: {
+        credentials: 'include'
+    },
+    request: operations => {
+        const token = localStorage.getItem('token')
+        operations.setContext({
+            headers: {
+                authorization: token
+            }
+        })
+    },
+    onError: ({networkError}) => {
+        if (networkError) {
+            console.log('network error', networkError);
+
+            // if (networkError.statusCode === 401) {
+            //     localStorage.removeItem('token')
+            // }
+        }
+    }
 })
 
-const Root = () => (
+const Root = ({refetch, session}) => (
     <Router>
+        <Fragment>
+        <Header session={session}/>
         <Switch>
             <Route path={'/'} exact component={App} />
-            <Route path={'/signin'} component={Signin} />
-            <Route path={'/signup'} component={Signup} />
+            <Route path={'/signin'} render={() => <Signin refetch={refetch}/>}/>
+            <Route path={'/signup'} render={() => <Signup refetch={refetch}/>}/>
+            <Route path={'/search'} component={Search} />
+            <Route path={'/profile'} component={Profile} />
+            <Route path={'/pets/add'} component={AddPet} />
             <Redirect to={'/'} />
         </Switch>
+        </Fragment>
     </Router>
 )
 
+const RootWithSession = Session(Root);
+
 ReactDOM.render(
 <ApolloProvider client={client} >
-<Root/> 
+<RootWithSession /> 
 </ApolloProvider>, document.getElementById('root'));

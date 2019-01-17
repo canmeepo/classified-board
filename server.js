@@ -1,15 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config({path: './variables.env'});
-const cors = require('cors')
-
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const Pet = require('./models/Pet');
 const User = require('./models/User');
 
 const { ApolloServer, gql } = require('apollo-server-express');
 
 const {typeDefs} = require('./schema');
-const {resolvers} = require('./resolvers')
+const {resolvers} = require('./resolvers');
+const {verifyToken} = require("./utils/token");
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
     .then(() => console.log('db connected'))
@@ -29,13 +30,29 @@ const corsOptions = {
     credentials: true
 }
 app.use(cors(corsOptions))
+
+// app.use(async (req, res, next) => {
+//     const token = req.headers['authorization']
+
+//     if (token !== "null") {
+//         try {
+//             const currentUser = await jwt.verify(token, process.env.SECRET)
+//             console.log(currentUser)
+//         } catch (err){
+//             console.error(err)
+//         }
+//     }
+
+//     next();
+// })
 const server = new ApolloServer({ 
     typeDefs, 
     resolvers, 
-    context: {
+    context: async ({req}) => ({
         Pet,
-        User
-    } 
+        User,
+        currentUser: await verifyToken(req)
+    })
 });
 server.applyMiddleware({ app });
 

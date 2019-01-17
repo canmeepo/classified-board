@@ -3,3 +3,15 @@ input {
     width: 300px;
     margin: 10px 0;
 }
+
+a {
+    padding-right: 20px;
+}
+
+.box {
+    border: 1px solid black;
+    margin: 10px 0;
+}
+.box > span {
+    display: block;
+}

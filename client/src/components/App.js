@@ -12,7 +12,7 @@ const App = () => (
         if (error) return <div>error...</div>
         console.log(data)
         return (
-          <div>{data.getAllPets.map((x,i)=> <div key={i}>
+          <div >{data.getAllPets.map((x,i)=> <div key={i} className="box">
             <span>name: {x.name} </span>
             <span>description: {x.desc} </span>
             <span>text: {x.text} </span>

@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import {SIGNUP_USER} from '../../quries'
+import {SIGNUP_USER} from '../../quries';
+import { withRouter } from 'react-router-dom';
+import Error from '../Error';
+
+const initialState = {
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+}
 
 class Signup extends Component {
-    state = {
-        username: '',
-        email: '',
-        password: '',
-        passwordConfirmation: ''
-    }
+    state = {...initialState};
 
     handleChange = e => {
         const {name, value} = e.target;
@@ -18,9 +22,25 @@ class Signup extends Component {
     handleSubmit = (event, signupUser) => {
         event.preventDefault();
 
-        signupUser().then(data => {
+        signupUser().then(async data => {
             console.log(data)
+            localStorage.setItem('token', data.data.signinUser.token)
+            await this.props.refetch();
+            this.clearState()
+            this.props.history.push('/')
         })
+    }
+
+    clearState = () => {
+        this.setState({...initialState})
+    }
+
+    validateForm = () => {
+        const {username, email, password, passwordConfirmation} = this.state;
+
+        const valid = username && email && password && passwordConfirmation && password === passwordConfirmation;
+
+        return !valid;
     }
 
     render() {
@@ -36,7 +56,8 @@ class Signup extends Component {
                                 <input type="email" name="email" placeholder="email" value={email} onChange={this.handleChange}/>
                                 <input type="password" name="password" placeholder="password" value={password} onChange={this.handleChange}/>
                                 <input type="password" name="passwordConfirmation" placeholder="password" value={passwordConfirmation} onChange={this.handleChange}/>
-                                <button>submit</button>
+                                <button disabled={loading || this.validateForm()}>submit</button>
+                                {error && <Error error={error} />}
                             </form>
                         )
                     }}
@@ -46,4 +67,4 @@ class Signup extends Component {
     }
 }
 
-export default Signup;
+export default withRouter(Signup);
