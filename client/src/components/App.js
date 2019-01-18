@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Query} from 'react-apollo';
 import {GET_ALL_PETS} from '../quries'
+import { Link } from 'react-router-dom';
 
 const App = () => (
   <div className="App">
@@ -12,12 +13,7 @@ const App = () => (
         if (error) return <div>error...</div>
         console.log(data)
         return (
-          <div >{data.getAllPets.map((x,i)=> <div key={i} className="box">
-            <span>name: {x.name} </span>
-            <span>description: {x.desc} </span>
-            <span>text: {x.text} </span>
-            <span>category: {x.category} </span>
-            </div>)}</div>
+          <div >{data.getAllPets.map((x,i)=> <PetItem {...x} key={x._id}/>)}</div>
         )
       }}
     </Query>
@@ -25,3 +21,16 @@ const App = () => (
 )
 
 export default App;
+
+
+const PetItem = (x) => (
+  <Link to={`/pets/${x._id}`}>
+  <div className="box">
+    <span>name: {x.name} </span>
+    <span>description: {x.desc} </span>
+    <span>text: {x.text} </span>
+    <span>category: {x.category} </span>
+    <span>id: {x._id} </span>
+  </div>
+  </Link>
+);

@@ -22,8 +22,10 @@ type User {
 
 type Query {
     getAllPets: [Pet]
+    getPet(_id: ID!): Pet
 
     getCurrentUser: User
+
 }
 
 type Token {

@@ -10,7 +10,7 @@ const createToken = (user, secret, expiresIn) => {
 exports.resolvers = {
     Query: {
         getAllPets: async (root, args, {Pet}) => {
-            const allPets = await Pet.find();
+            const allPets = await Pet.find().sort({createdDate: 'desc'});
             return allPets;
         },
 
@@ -26,6 +26,12 @@ exports.resolvers = {
                 })
 
             return user;
+        },
+
+        getPet: async (root, {_id}, {Pet}) => {
+            const pet = await Pet.findOne({_id})
+
+            return pet;
         }
     },
 

@@ -3,6 +3,7 @@ import {gql} from 'apollo-boost';
 export const GET_ALL_PETS = gql`
     query {
         getAllPets {
+            _id
             name
             desc
             text
@@ -34,6 +35,35 @@ export const GET_CURRENT_USER = gql`
         getCurrentUser {
             username
             email
+        }
+    }
+`
+
+export const GET_PET = gql`
+    query($_id: ID!) {
+        getPet(_id: $_id) {
+            name
+            text
+            desc
+            _id
+            text
+        }
+    }
+`
+
+export const ADD_PET = gql`
+    mutation($name: String!,
+        $category: String!,
+        $desc: String!,
+        $text: String!,
+        $username: String) {
+        addPet(name: $name, category: $category, desc: $desc, text: $text, username: $username,) {
+            _id
+            name
+            category
+            desc
+            text
+            username
         }
     }
 `

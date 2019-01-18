@@ -12,6 +12,7 @@ import Header from './components/Header'
 import Search from './components/pets/Search'
 import AddPet from './components/pets/AddPet'
 import Profile from './components/profile/profile'
+import PetPage from './components/pets/PetPage'
 
 
 
@@ -49,7 +50,8 @@ const Root = ({refetch, session}) => (
             <Route path={'/signup'} render={() => <Signup refetch={refetch}/>}/>
             <Route path={'/search'} component={Search} />
             <Route path={'/profile'} component={Profile} />
-            <Route path={'/pets/add'} component={AddPet} />
+            <Route path={'/pets/add'} render={() => <AddPet session={session}/> } />
+            <Route path={'/pets/:_id'} component={PetPage} />
             <Redirect to={'/'} />
         </Switch>
         </Fragment>
