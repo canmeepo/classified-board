@@ -13,11 +13,13 @@ const PetPage = ({match}) => {
                 if (error) return <div>error...</div>
                 return (
                     <div className="box"> 
+                        {console.log(data.getPet, 'pet page')}
                         <span>name: {data.getPet.name} </span>
                         <span>description: {data.getPet.desc} </span>
                         <span>text: {data.getPet.text} </span>
                         <span>category: {data.getPet.category} </span>
                         <span>id: {data.getPet._id} </span>
+                        <span>username: {data.getPet.username} </span>
                     </div>
                 )
             }}

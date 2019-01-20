@@ -47,6 +47,7 @@ export const GET_PET = gql`
             desc
             _id
             text
+            username
         }
     }
 `
