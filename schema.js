@@ -23,6 +23,7 @@ type User {
 type Query {
     getAllPets: [Pet]
     getPet(_id: ID!): Pet
+    searchPets(searchParam: String): [Pet]
 
     getCurrentUser: User
 

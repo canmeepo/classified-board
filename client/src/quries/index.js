@@ -68,3 +68,17 @@ export const ADD_PET = gql`
         }
     }
 `
+
+export const SEARCH_PETS = gql`
+    query($searchParam: String) {
+        searchPets(searchParam: $searchParam) {
+            _id
+            name
+            desc
+            text
+            category
+            likes
+            createdDate
+        }
+    }
+`

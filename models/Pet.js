@@ -31,4 +31,8 @@ const PetSchema = new Schema({
     }
 })
 
+PetSchema.index({
+    '$**': 'text'
+})
+
 module.exports = mongoose.model('Pet', PetSchema)

@@ -32,6 +32,25 @@ exports.resolvers = {
             const pet = await Pet.findOne({_id})
 
             return pet;
+        },
+
+        searchPets: async(root, {searchParam}, {Pet}) => {
+            if (searchParam) {
+                const searchResults = await Pet.find({
+                    $text: {$search: searchParam}
+                }, {
+                    score: {$meta: "textScore"}
+                }).sort({
+                    score: {$meta: "textScore"}
+                })
+
+                return searchResults;
+            } else {
+                const pets = await Pet.find().sort({createdDate: 'desc'});
+
+                return pets;
+            }
+
         }
     },
 

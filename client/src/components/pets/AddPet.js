@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Mutation} from 'react-apollo';
 import {withRouter} from 'react-router-dom';
-import {ADD_PET} from '../../quries';
+import {ADD_PET, GET_ALL_PETS} from '../../quries';
 import Error from '../Error'
 
 const initialState = {
@@ -46,11 +46,22 @@ class AddPet  extends Component {
         })
     }
 
+    updateCache = (cache, {data: {addPet}}) => {
+        const {getAllPets} = cache.readQuery({query: GET_ALL_PETS});
+
+        cache.writeQuery({
+            query: GET_ALL_PETS,
+            data: {
+                getAllPets: [addPet, ...getAllPets]
+            }
+        })
+    }
+
     render() {
         const {name, category, desc, text, username} = this.state;
 
         return (
-            <Mutation mutation={ADD_PET} variables={{name, category, desc, text, username}}>
+            <Mutation mutation={ADD_PET} variables={{name, category, desc, text, username}} update={this.updateCache}>
                 {(addPet, {data, loading, error}) => {
                 return (
                     <div>
