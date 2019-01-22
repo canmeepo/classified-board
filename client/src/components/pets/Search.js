@@ -1,30 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {ApolloConsumer} from 'react-apollo';
 import {SEARCH_PETS} from '../../quries'
 import { Link } from 'react-router-dom';
-import { threadId } from 'worker_threads';
 
-// const Search = () => (
-    // <Query query={SEARCH_PETS} variables={{searchParam: " "}}>
-    //     {({data, loading, error}) => {
-    //         if (loading) return <div>loading...</div>
-    //         if (error) return <div>error...</div>
-    //         console.log(data, 'search')
-    //         return (
-    //             <div>
-    //                 <div>search</div>
-    //                 <input type="search" />
-    //                 <div>
-    //                     {data.searchPets.map(x => <SearchItem {...x} key={x._id}/>)}
-    //                 </div>
-    //             </div>
-    //         )
-    //     }}
-    // </Query>
+class Search extends Component {
 
-class Search extends component {
+    state = {
+        searchResult: []
+    }
+
+    handleChange = ({searchPets}) => {
+        this.setState({searchResult: searchPets})
+    }
 
     render() {
+
+        const { searchResult} = this.state;
+
         return (
             <ApolloConsumer>
             {(client) => (
@@ -39,14 +31,14 @@ class Search extends component {
                             this.handleChange(data);
                         }} />
                         <div>
-                            {data.searchPets.map(x => <SearchItem {...x} key={x._id}/>)}
+                            {searchResult.map(x => <SearchItem {...x} key={x._id}/>)}
                         </div>
                     </div>
             )}
         </ApolloConsumer>
         )
     }
-)
+}
 
 export default Search;
 
