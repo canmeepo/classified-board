@@ -49,7 +49,7 @@ const Root = ({refetch, session}) => (
             <Route path={'/signin'} render={() => <Signin refetch={refetch}/>}/>
             <Route path={'/signup'} render={() => <Signup refetch={refetch}/>}/>
             <Route path={'/search'} component={Search} />
-            <Route path={'/profile'} component={Profile} />
+            <Route path={'/profile'} render={() => <Profile session={session} /> } />
             <Route path={'/pets/add'} render={() => <AddPet session={session}/> } />
             <Route path={'/pets/:_id'} component={PetPage} />
             <Redirect to={'/'} />

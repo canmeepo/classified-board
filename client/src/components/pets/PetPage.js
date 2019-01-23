@@ -11,6 +11,7 @@ const PetPage = ({match}) => {
             {({data, loading, error}) => {
                 if (loading) return <div>loading...</div>
                 if (error) return <div>error...</div>
+                console.warn()
                 return (
                     <div className="box"> 
                         {console.log(data.getPet, 'pet page')}

@@ -26,6 +26,7 @@ type Query {
     searchPets(searchParam: String): [Pet]
 
     getCurrentUser: User
+    getUserPosts(username: String!): [Pet]
 
 }
 

@@ -39,7 +39,7 @@ class AddPet  extends Component {
     handleSubmit = (e, addPet) => {
         e.preventDefault();
 
-        addPet().then(data => {
+        addPet().then(({data}) => {
             console.log(data)
             this.clearState();
             this.props.history.push('/')

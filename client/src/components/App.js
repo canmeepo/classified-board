@@ -11,7 +11,7 @@ const App = () => (
       {({data, loading, error}) => {
         if (loading) return <div>loading...</div>
         if (error) return <div>error...</div>
-        console.log(data)
+        console.log(data, 'get all pets')
         return (
           <div >{data.getAllPets.map((x,i)=> <PetItem {...x} key={x._id}/>)}</div>
         )

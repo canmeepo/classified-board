@@ -28,6 +28,14 @@ exports.resolvers = {
             return user;
         },
 
+        getUserPosts: async (root, {username}, {Pet}) => {
+            const userPosts = await Pet.find({username}).sort({
+                createdDate: 'desc'
+            });
+
+            return userPosts;
+        },
+
         getPet: async (root, {_id}, {Pet}) => {
             const pet = await Pet.findOne({_id})
 

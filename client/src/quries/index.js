@@ -35,8 +35,23 @@ export const GET_CURRENT_USER = gql`
         getCurrentUser {
             username
             email
+            createdDate
+            favorites {
+                _id
+                name
+            }
         }
     }
+`
+
+export const GET_USER_POSTS = gql`
+    query($username: String!) {
+        getUserPosts(username: $username) {
+            _id
+            name
+        }
+    }
+
 `
 
 export const GET_PET = gql`
@@ -82,3 +97,4 @@ export const SEARCH_PETS = gql`
         }
     }
 `
+
