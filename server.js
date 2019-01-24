@@ -19,13 +19,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
 
 const PORT = process.env.PORT || 8000;
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'))
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-    })
-}
 
 const { ObjectId } = mongoose.Types;
 ObjectId.prototype.valueOf = function () {
@@ -49,6 +43,14 @@ const server = new ApolloServer({
         currentUser: await verifyToken(req)
     })
 });
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 server.applyMiddleware({ app });
 
