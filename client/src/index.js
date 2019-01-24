@@ -17,7 +17,8 @@ import PetPage from './components/pets/PetPage'
 
 
 const client = new ApolloClient({
-    uri: 'http://localhost:8000/graphql',
+    // uri: 'http://localhost:8000/graphql',
+    uri: 'https://petison-dev.herokuapp.com/graphql',
     fetchOptions: {
         credentials: 'include'
     },
