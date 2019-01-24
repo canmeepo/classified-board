@@ -4,7 +4,6 @@ import Signout from './auth/Signout'
 
 const Header = ({session}) => (
     <div>
-        {console.log(session, 'session')}
         {session && session.getCurrentUser ? <HeaderUser /> : <HeaderAnnon />}
     </div>
 )

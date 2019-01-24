@@ -31,20 +31,6 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
-// app.use(async (req, res, next) => {
-//     const token = req.headers['authorization']
-
-//     if (token !== "null") {
-//         try {
-//             const currentUser = await jwt.verify(token, process.env.SECRET)
-//             console.log(currentUser)
-//         } catch (err){
-//             console.error(err)
-//         }
-//     }
-
-//     next();
-// })
 const server = new ApolloServer({ 
     typeDefs, 
     resolvers, 
@@ -54,6 +40,7 @@ const server = new ApolloServer({
         currentUser: await verifyToken(req)
     })
 });
+
 server.applyMiddleware({ app });
 
 app.listen(PORT, () => {

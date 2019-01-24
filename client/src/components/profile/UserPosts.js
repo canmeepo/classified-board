@@ -1,6 +1,6 @@
 import React from 'react';
-import { Query } from 'react-apollo';
-import { GET_USER_POSTS } from '../../quries';
+import { Query , Mutation} from 'react-apollo';
+import { GET_USER_POSTS, DELETE_USER_POST, GET_ALL_PETS, GET_CURRENT_USER } from '../../quries';
 import { Link } from 'react-router-dom';
 
 const UserPosts = ({username}) => {
@@ -10,16 +10,11 @@ const UserPosts = ({username}) => {
         {(data, loading, error ) => {
             if (loading) return <div>loading...</div>
             if (error) return <div>error...</div>
-            const {getUserPosts} = data;
-            let arr = [];
-            if(data && getUserPosts) {
-                arr = data
-            }
-            console.log(data)
+
             return (
                 <div>
                     <h3>your posts</h3>
-                    <UserPostItem {...data}/>
+                    <UserPostItem {...data} {...{username}}/>
                 </div>
             )
         }}
@@ -30,15 +25,53 @@ const UserPosts = ({username}) => {
 export default UserPosts;
 
 
-const UserPostItem = ({data}) => (
+const UserPostItem = ({data, username}, ) => (
+   
     <div>
+        {data.getUserPosts && !data.getUserPosts.length && <div>you don't have posts</div>}
         {data.getUserPosts && data.getUserPosts.map(x => (
-            <Link key={x._id} to={`/pets/${x._id}`}>
-                <div className="box">
-                <span>name: {x.name} </span>
-                <span>id: {x._id} </span>
-                </div>
-            </Link>
+            <div key={x._id}>
+                <Link  to={`/pets/${x._id}`}>
+                    <div className="box">
+                    <span>name: {x.name} </span>
+                    <span>id: {x._id} </span>
+                    <span>likes</span>
+                    </div>
+                </Link>
+                <Mutation 
+                    mutation={DELETE_USER_POST} 
+                    variables={{_id: x._id}}
+                    refetchQueries={() => [
+                        {query: GET_ALL_PETS},
+                        {query: GET_CURRENT_USER}
+                    ]} 
+                    update={(cache, {data: { deleteUserPost}}) => {
+                     const {getUserPosts} = cache.readQuery({
+                         query: GET_USER_POSTS,
+                         variables: {username}
+                     })
+
+                     cache.writeQuery({
+                         query: GET_USER_POSTS,
+                         variables: {username},
+                         data: {
+                             getUserPosts: getUserPosts.filter(x => x._id !== deleteUserPost._id)
+                         }
+                     })
+                    }}
+                >
+                    {(deleteUserPost,attrs = {}) => {
+                        return (
+                            <button onClick={() => handleDelete(deleteUserPost)}>{attrs.loading ? 'deleting...' : 'delete'}</button>
+                        )
+                    }}
+                </ Mutation>
+            </div>
         ))}
     </div>
 );
+
+const handleDelete = (deleteUserPost) => {
+    deleteUserPost().then(({data}) => {
+    });
+}

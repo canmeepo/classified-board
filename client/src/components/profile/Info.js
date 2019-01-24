@@ -16,7 +16,7 @@ const Info = ({session}) => (
         <div>email: {formDate(session.getCurrentUser.createdDate)}</div>
 
         <div>Favorites:</div>
-        {session.getCurrentUser.favorites.map(x => <Link to={`/pets/${x._id}`}>
+        {session.getCurrentUser.favorites.map(x => <Link key={x._id} to={`/pets/${x._id}`}>
             <div className="box">
                 <span>name: {x.name} </span>
                 <span>id: {x._id} </span>

@@ -42,6 +42,9 @@ type Mutation {
         text: String!
         username: String
     ): Pet
+    deleteUserPost(_id: ID): Pet
+    likePet(_id: ID!, username: String!): Pet
+    unlikePet(_id: ID!, username: String!): Pet
 
     signupUser(username: String!, email: String!, password: String!): Token
     signinUser(email: String!, password: String!): Token

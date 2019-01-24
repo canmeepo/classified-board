@@ -71,6 +71,28 @@ exports.resolvers = {
             return newPet
         },
 
+        likePet: async (root, {_id, username}, {Pet, User}) => {
+            const pet = await Pet.findOneAndUpdate({_id}, {$inc: {likes: 1}})
+
+            const user = await User.findOneAndUpdate({username}, {$addToSet: {favorites: _id}});
+
+            return pet;
+        }, 
+        
+        unlikePet: async (root, {_id, username}, {Pet, User}) => {
+            const pet = await Pet.findOneAndUpdate({_id}, {$inc: {likes: -1}})
+
+            const user = await User.findOneAndUpdate({username}, {$pull: {favorites: _id}});
+
+            return pet;
+        },  
+
+        deleteUserPost: async (root, {_id}, {Pet}) => {
+            const post = await Pet.findOneAndRemove({_id});
+
+            return post;
+        },
+
         signinUser: async (root, {email, password}, {User}) => {
             const user = await User.findOne({email});
 

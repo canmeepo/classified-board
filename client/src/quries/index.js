@@ -63,6 +63,7 @@ export const GET_PET = gql`
             _id
             text
             username
+            likes
         }
     }
 `
@@ -98,3 +99,29 @@ export const SEARCH_PETS = gql`
     }
 `
 
+export const DELETE_USER_POST = gql`
+    mutation($_id: ID!) {
+        deleteUserPost(_id: $_id) {
+            _id
+        }
+    }
+
+`
+
+export const LIKE_PET = gql`
+    mutation($_id: ID!, $username: String!) {
+        likePet(_id: $_id, username: $username) {
+            _id
+            likes
+        }
+    }
+`
+
+export const UNLIKE_PET = gql`
+    mutation($_id: ID!, $username: String!) {
+        unlikePet(_id: $_id, username: $username) {
+            _id
+            likes
+        }
+    }
+`

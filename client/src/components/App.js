@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import { Query} from 'react-apollo';
 import {GET_ALL_PETS} from '../quries'
@@ -11,7 +11,7 @@ const App = () => (
       {({data, loading, error}) => {
         if (loading) return <div>loading...</div>
         if (error) return <div>error...</div>
-        console.log(data, 'get all pets')
+
         return (
           <div >{data.getAllPets.map((x,i)=> <PetItem {...x} key={x._id}/>)}</div>
         )

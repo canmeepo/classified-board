@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { Mutation} from 'react-apollo';
 import {withRouter} from 'react-router-dom';
 import {ADD_PET, GET_ALL_PETS} from '../../quries';
-import Error from '../Error'
+import Error from '../Error';
+import withAuth from '../withAuth';
 
 const initialState = {
     name: '',
@@ -40,7 +41,6 @@ class AddPet  extends Component {
         e.preventDefault();
 
         addPet().then(({data}) => {
-            console.log(data)
             this.clearState();
             this.props.history.push('/')
         })
@@ -87,4 +87,4 @@ class AddPet  extends Component {
     }
 }
 
-export default withRouter(AddPet);
+export default withAuth(session => session.data && session.data.getCurrentUser)(withRouter(AddPet));
