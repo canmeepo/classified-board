@@ -73,14 +73,16 @@ export const ADD_PET = gql`
         $category: String!,
         $desc: String!,
         $text: String!,
-        $username: String) {
-        addPet(name: $name, category: $category, desc: $desc, text: $text, username: $username,) {
+        $username: String,
+        $imageUrl: String!) {
+        addPet(name: $name, category: $category, desc: $desc, text: $text, username: $username, imageUrl: $imageUrl) {
             _id
             name
             category
             desc
             text
             username
+            imageUrl
         }
     }
 `

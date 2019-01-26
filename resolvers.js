@@ -63,9 +63,9 @@ exports.resolvers = {
     },
 
     Mutation: {
-        addPet: async (root, {name, desc, category, text, username},{ Pet }) => {
+        addPet: async (root, {name, desc, category, text, username, imageUrl},{ Pet }) => {
             const newPet = await new Pet({
-                name, desc, category, text, username
+                name, desc, category, text, username, imageUrl
             }).save()
 
             return newPet

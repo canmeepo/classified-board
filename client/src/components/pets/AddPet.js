@@ -10,7 +10,8 @@ const initialState = {
     category: 'cat',
     desc: '',
     text: '',
-    username: ''
+    username: '',
+    imageUrl: ''
 }
 
 class AddPet  extends Component {
@@ -23,16 +24,28 @@ class AddPet  extends Component {
     handleChange = e => {
         const {name, value} = e.target;
         this.setState({[name]: value})
+        console.warn(this.state)
     }
+
+    handleChangeImg = (e) => {
+        const selectedFile = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = event => {
+            this.setState({imageUrl: event.target.result})
+        };
+        reader.readAsDataURL(selectedFile);
+    }
+
 
     clearState = () => {
         this.setState({...initialState})
     }
 
     validateForm = () => {
-        const {name, category, desc, text, username} = this.state;
+        const {name, category, desc, text, username, imageUrl} = this.state;
 
-        const valid = name && category && desc && text && username;
+        const valid = name && category && desc && text && username && imageUrl;
 
         return !valid;
     }
@@ -58,7 +71,7 @@ class AddPet  extends Component {
     }
 
     render() {
-        const {name, category, desc, text, username} = this.state;
+        const {name, category, desc, text, username, imageUrl} = this.state;
 
         return (
             <Mutation mutation={ADD_PET} variables={{name, category, desc, text, username}} update={this.updateCache}>
@@ -74,6 +87,7 @@ class AddPet  extends Component {
                                 <option value="another">another</option>
                             </select>
                             <input type="text" name="desc" placeholder="description" onChange={this.handleChange} value={desc}/>
+                            <input type="text" name="imageUrl" placeholder="image url" onChange={this.handleChange} value={imageUrl}/>
                             <textarea name="text" placeholder="text" onChange={this.handleChange} value={text}></textarea>
                             <button disabled={loading || this.validateForm()}>submit</button>
                             {error && <Error error={error} />}

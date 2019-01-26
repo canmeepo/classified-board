@@ -4,6 +4,7 @@ type Pet {
     _id: ID
     name: String!
     category: String!
+    imageUrl: String!
     desc: String!
     text: String!
     createdDate: String
@@ -41,6 +42,7 @@ type Mutation {
         desc: String!
         text: String!
         username: String
+        imageUrl: String!
     ): Pet
     deleteUserPost(_id: ID): Pet
     likePet(_id: ID!, username: String!): Pet
