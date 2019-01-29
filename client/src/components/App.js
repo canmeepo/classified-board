@@ -25,7 +25,7 @@ export default App;
 
 const PetItem = (x) => (
   <Link to={`/pets/${x._id}`}>
-  <div className="box">
+  <div className="box" style={{background: `url(${x.imageUrl})`}}>
     <span>name: {x.name} </span>
     <span>description: {x.desc} </span>
     <span>text: {x.text} </span>

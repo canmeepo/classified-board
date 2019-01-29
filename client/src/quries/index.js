@@ -5,6 +5,7 @@ export const GET_ALL_PETS = gql`
         getAllPets {
             _id
             name
+            imageUrl
             desc
             text
             category
@@ -49,6 +50,7 @@ export const GET_USER_POSTS = gql`
         getUserPosts(username: $username) {
             _id
             name
+            imageUrl
         }
     }
 
@@ -64,6 +66,7 @@ export const GET_PET = gql`
             text
             username
             likes
+            imageUrl
         }
     }
 `

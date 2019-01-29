@@ -62,7 +62,10 @@ const UserPostItem = ({data, username}, ) => (
                 >
                     {(deleteUserPost,attrs = {}) => {
                         return (
-                            <button onClick={() => handleDelete(deleteUserPost)}>{attrs.loading ? 'deleting...' : 'delete'}</button>
+                            <div>
+                                <button>update</button>
+                                <button onClick={() => handleDelete(deleteUserPost)}>{attrs.loading ? 'deleting...' : 'delete'}</button>
+                            </div>
                         )
                     }}
                 </ Mutation>

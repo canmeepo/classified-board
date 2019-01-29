@@ -14,7 +14,7 @@ const PetPage = ({match}) => {
                 if (error) return <div>error...</div>
 
                 return (
-                    <div className="box"> 
+                    <div className="box" style={{background: `url(${data.getPet.imageUrl})`}}> 
                         <span>name: {data.getPet.name} </span>
                         <span>description: {data.getPet.desc} </span>
                         <span>text: {data.getPet.text} </span>

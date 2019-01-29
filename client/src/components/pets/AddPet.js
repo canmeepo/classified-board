@@ -62,6 +62,8 @@ class AddPet  extends Component {
     updateCache = (cache, {data: {addPet}}) => {
         const {getAllPets} = cache.readQuery({query: GET_ALL_PETS});
 
+        console.warn(getAllPets)
+
         cache.writeQuery({
             query: GET_ALL_PETS,
             data: {
@@ -74,7 +76,7 @@ class AddPet  extends Component {
         const {name, category, desc, text, username, imageUrl} = this.state;
 
         return (
-            <Mutation mutation={ADD_PET} variables={{name, category, desc, text, username}} update={this.updateCache}>
+            <Mutation mutation={ADD_PET} variables={{name, category, desc, text, username, imageUrl}} update={this.updateCache}>
                 {(addPet, {data, loading, error}) => {
                 return (
                     <div>
