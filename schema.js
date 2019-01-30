@@ -45,6 +45,16 @@ type Mutation {
         imageUrl: String!
     ): Pet
     deleteUserPost(_id: ID): Pet
+
+    updateUserPost(
+        _id: ID, 
+        name: String!
+        category: String!
+        desc: String!
+        text: String!
+        username: String
+        imageUrl: String!): Pet
+
     likePet(_id: ID!, username: String!): Pet
     unlikePet(_id: ID!, username: String!): Pet
 

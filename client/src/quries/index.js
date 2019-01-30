@@ -110,7 +110,19 @@ export const DELETE_USER_POST = gql`
             _id
         }
     }
+`
 
+export const UPDATE_USER_POST = gql`
+    mutation($_id: ID!, $name: String!, $imageUrl: String!, $desc: String!, $category: String!, $text: String!) {
+        updateUserPost(_id: $_id, name: $name, imageUrl: $imageUrl, desc: $desc, category: $category. text: $text) {
+            _id
+            name
+            imageUrl
+            desc
+            category
+            text
+        }
+    }
 `
 
 export const LIKE_PET = gql`

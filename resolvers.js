@@ -93,6 +93,12 @@ exports.resolvers = {
             return post;
         },
 
+        updateUserPost: async (root, {_id, name, imageUrl, category, desc, text, username}, {Pet}) => {
+            const udpdatedPost = await Pet.findOneAndUpdate({_id}, {$set: {name, imageUrl, desc, category, text, username}}, {new: true});
+
+            return updatedPost;
+        },
+
         signinUser: async (root, {email, password}, {User}) => {
             const user = await User.findOne({email});
 
